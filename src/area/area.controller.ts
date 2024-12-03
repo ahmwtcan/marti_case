@@ -1,5 +1,5 @@
-import { Body, Controller, Post, Get } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { Body, Controller, Post, Get, Query } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBody, ApiQuery } from '@nestjs/swagger';
 import { AreaService } from './area.service';
 import { CreateAreaDto } from './dto/create-area.dto';
 
@@ -18,8 +18,13 @@ export class AreaController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'List all areas' })
-  async getAreas() {
-    return this.areaService.getAllAreas();
+  @ApiOperation({ summary: 'Get all areas' })
+  @ApiQuery({ name: 'cursor', required: false, type: Number })
+  @ApiQuery({ name: 'pageSize', required: false, type: Number })
+  async getAllAreas(
+    @Query('pageSize') pageSize: number,
+    @Query('cursor') cursor?: number,
+  ) {
+    return this.areaService.getAllAreas(Number(cursor), Number(pageSize));
   }
 }

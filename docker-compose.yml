@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://postgres:default@db:5432/postgis_dev"
+    command: >
+      sh -c "npx prisma migrate deploy &&
+             npm run seed &&
+             npm run start:prod"
+    volumes:
+      - .:/app
+  db:
+    image: postgis/postgis:13-3.1-alpine
+    container_name: postgis
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: default
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:

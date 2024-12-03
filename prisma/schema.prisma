@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
 datasource db {
@@ -30,7 +31,5 @@ model Log {
   area      Area     @relation("AreaLogs", fields: [areaId], references: [id])
   user      User     @relation("UserLogs", fields: [userId], references: [id])
 
-  @@index([userId])
-  @@index([areaId])
-  @@index([entryTime])
+  @@index([userId, entryTime])
 }
