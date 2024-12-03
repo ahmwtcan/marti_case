@@ -11,17 +11,15 @@ model User {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   logs      Log[]    @relation("UserLogs")
 }
 
 model Area {
-  id        Int                      @id @default(autoincrement())
+  id        Int                                    @id @default(autoincrement())
   name      String
-  createdAt DateTime                 @default(now())
-  updatedAt DateTime                 @updatedAt
-  boundary  Unsupported("geography")
-  logs      Log[]                    @relation("AreaLogs")
+  createdAt DateTime                               @default(now())
+  boundary  Unsupported("geometry(Polygon, 4326)")
+  logs      Log[]                                  @relation("AreaLogs")
 }
 
 model Log {
@@ -35,13 +33,4 @@ model Log {
   @@index([userId])
   @@index([areaId])
   @@index([entryTime])
-}
-
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-model spatial_ref_sys {
-  srid      Int     @id
-  auth_name String? @db.VarChar(256)
-  auth_srid Int?
-  srtext    String? @db.VarChar(2048)
-  proj4text String? @db.VarChar(2048)
 }

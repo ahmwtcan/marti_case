@@ -7,8 +7,12 @@ export class LocationService {
 
   async logUserLocation(userId: number, lat: number, lng: number) {
     const areas: { id: number }[] = await this.prisma.$queryRaw`
-      SELECT id FROM "Area"
-      WHERE ST_Contains(boundary, ST_SetSRID(ST_Point(${lng}, ${lat}), 4326))
+      SELECT id
+      FROM "Area"
+      WHERE ST_Contains(
+        ST_GeomFromWKB(boundary),
+        ST_SetSRID(ST_Point(${lng}, ${lat}), 4326)
+      );
     `;
 
     if (areas.length > 0) {

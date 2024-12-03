@@ -1,3 +1,7 @@
+
+CREATE EXTENSION postgis;
+
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
@@ -14,7 +18,7 @@ CREATE TABLE "Area" (
     "name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "boundary" geography NOT NULL,
+    "boundary" geometry(Polygon, 4326) NOT NULL,
 
     CONSTRAINT "Area_pkey" PRIMARY KEY ("id")
 );
