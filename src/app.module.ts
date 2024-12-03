@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PrismaModule } from './prisma/prisma.module';
+import { PrismaModule } from './libs/prisma/prisma.module';
 import { AreaService } from './area/area.service';
 import { AreaController } from './area/area.controller';
 import { LocationController } from './location/location.controller';
@@ -11,7 +11,12 @@ import { LogController } from './log/log.controller';
 
 @Module({
   imports: [PrismaModule],
-  controllers: [AppController, AreaController, LocationController, LogController],
+  controllers: [
+    AppController,
+    AreaController,
+    LocationController,
+    LogController,
+  ],
   providers: [AppService, AreaService, LocationService, LogService],
 })
 export class AppModule {}
