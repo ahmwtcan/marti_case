@@ -37,4 +37,11 @@ $ npm run test:cov
 
 # k6
 k6 run stress-test.js
+
+
 ```
+
+# docker compose
+
+docker-compose down  
+docker-compose up --build
