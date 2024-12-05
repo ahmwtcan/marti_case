@@ -32,6 +32,10 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Docs
+
+http://localhost:3000/docs#/
+
 ## Run tests
 
 ```bash
@@ -50,7 +54,6 @@ k6 run stress-test.js
 
 ```
 
-# docker compose
+## docker compose
 
-docker-compose down  
 docker-compose up --build
