@@ -4,6 +4,15 @@
 $ npm install
 ```
 
+# prisma
+
+## Prisma setup
+
+```bash
+$ npx prisma generate
+$ npx prisma migrate dev
+```
+
 # seed
 
 ```bash

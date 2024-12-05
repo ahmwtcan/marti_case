@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../libs/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class LocationService {
@@ -10,23 +11,23 @@ export class LocationService {
       SELECT id
       FROM "Area"
       WHERE ST_Contains(
-        ST_GeomFromWKB(boundary),
+        boundary,
         ST_SetSRID(ST_Point(${lng}, ${lat}), 4326)
       );
     `;
 
     if (areas.length > 0) {
-      await this.prisma.log.create({
-        data: {
-          userId,
-          areaId: areas[0].id,
-        },
-      });
+      await this.prisma.$executeRaw`
+        INSERT INTO "Log" ("userId", "areaId")
+        VALUES ${Prisma.join(
+          areas.map((area) => Prisma.sql`(${userId}, ${area.id})`),
+        )}
+      `;
     }
 
     return {
       success: true,
-      matchedArea: areas.length > 0 ? areas[0].id : null,
+      matchedAreas: areas.length > 0 ? areas : null,
     };
   }
 }

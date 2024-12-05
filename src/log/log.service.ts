@@ -11,9 +11,11 @@ export class LogService {
       skip: cursor ? 1 : 0,
       cursor: cursor ? { id: cursor } : undefined,
       orderBy: { id: 'asc' },
-      include: {
-        user: true,
-        area: true,
+      select: {
+        id: true,
+        entryTime: true,
+        user: { select: { id: true, name: true } },
+        area: { select: { id: true, name: true } },
       },
     });
 
