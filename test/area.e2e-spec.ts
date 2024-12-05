@@ -32,10 +32,10 @@ describe('Areas (e2e)', () => {
 
   it('should retrieve all areas', () => {
     return request(app.getHttpServer())
-      .get('/areas')
+      .get('/areas?pageSize=10')
       .expect(200)
       .expect((res) => {
-        expect(res.body).toBeInstanceOf(Array);
+        expect(res.body.areas).toBeInstanceOf(Array);
       });
   });
 });

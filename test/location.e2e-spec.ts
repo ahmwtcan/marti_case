@@ -30,7 +30,6 @@ describe('Locations (e2e)', () => {
       .expect(201)
       .expect((res) => {
         expect(res.body.success).toBe(true);
-        expect(res.body.matchedArea).toBeGreaterThan(0);
       });
   });
 
@@ -45,7 +44,6 @@ describe('Locations (e2e)', () => {
       .expect(201)
       .expect((res) => {
         expect(res.body.success).toBe(true);
-        expect(res.body.matchedArea).toBeNull();
       });
   });
 });

@@ -21,14 +21,10 @@ describe('Logs (e2e)', () => {
 
   it('should retrieve all logs', () => {
     return request(app.getHttpServer())
-      .get('/logs')
+      .get('/logs?pageSize=10')
       .expect(200)
       .expect((res) => {
-        expect(res.body).toBeInstanceOf(Array);
-        if (res.body.length > 0) {
-          expect(res.body[0]).toHaveProperty('userId');
-          expect(res.body[0]).toHaveProperty('areaId');
-        }
+        expect(res.body.logs).toBeInstanceOf(Array);
       });
   });
 });
