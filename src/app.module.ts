@@ -11,12 +11,7 @@ import { LogController } from './log/log.controller';
 
 @Module({
   imports: [PrismaModule],
-  controllers: [
-    AppController,
-    AreaController,
-    LocationController,
-    LogController,
-  ],
-  providers: [AppService, AreaService, LocationService, LogService],
+  controllers: [AreaController, LocationController, LogController],
+  providers: [AreaService, LocationService, LogService],
 })
 export class AppModule {}

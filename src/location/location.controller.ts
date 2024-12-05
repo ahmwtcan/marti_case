@@ -2,13 +2,13 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
 import { LocationService } from './location.service';
 
-@ApiTags('locations') // Group this controller under "locations"
+@ApiTags('locations')
 @Controller('locations')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Log user location' }) // Add operation summary
+  @ApiOperation({ summary: 'Log user location' })
   @ApiBody({
     schema: {
       type: 'object',
@@ -18,7 +18,7 @@ export class LocationController {
         lng: { type: 'number', example: -74.006 },
       },
     },
-  }) // Define request body schema
+  })
   async logLocation(
     @Body() body: { userId: number; lat: number; lng: number },
   ) {
