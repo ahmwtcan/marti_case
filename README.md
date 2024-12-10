@@ -45,9 +45,6 @@ $ npm run test
 # e2e tests
 $ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-
 # k6
 k6 run stress-test.js
 

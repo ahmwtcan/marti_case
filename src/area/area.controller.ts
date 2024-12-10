@@ -9,7 +9,7 @@ export class AreaController {
   constructor(private readonly areaService: AreaService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new area' })
+  @ApiOperation({ summary: 'Create a new area. expects EWKT ' })
   async createArea(@Body() createAreaDto: CreateAreaDto) {
     return this.areaService.createArea(
       createAreaDto.name,

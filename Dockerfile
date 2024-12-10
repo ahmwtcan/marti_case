@@ -1,7 +1,10 @@
 # Stage 1: Build
-FROM node:18-alpine AS build
+FROM node:18.18-alpine AS build
 
 WORKDIR /app
+
+# Install dependencies required for building Prisma and OpenSSL 1.1
+RUN apk add --no-cache openssl
 
 # Copy package files and install dependencies
 COPY package.json package-lock.json ./
@@ -16,9 +19,12 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Runtime
-FROM node:18-alpine
+FROM node:18.18-alpine
 
 WORKDIR /app
+
+# Install OpenSSL runtime for Prisma compatibility
+RUN apk add --no-cache openssl
 
 # Copy built files and Prisma schema from build stage
 COPY --from=build /app /app

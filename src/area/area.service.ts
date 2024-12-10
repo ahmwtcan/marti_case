@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PrismaService } from '../libs/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 
@@ -7,12 +7,14 @@ export class AreaService {
   constructor(private prisma: PrismaService) {}
   async createArea(name: string, boundary: string) {
     if (!isValidWKT(boundary)) {
-      throw new Error('Invalid boundary format.');
+      throw new InternalServerErrorException('Invalid boundary format.');
+
+      //SRID=4326;POLYGON((0 0, 0 1, 1 1, 1 0, 0 0)) Şeklinde gönderdiğimiz için EWKT formatında olduğu için bu şekilde kontrol edebiliriz.
     }
 
     await this.prisma.$executeRaw`
       INSERT INTO "Area" (name, boundary)
-      VALUES (${name}, ST_GeometryFromText(${boundary}, 4326));
+      VALUES (${name}, ST_GeomFromEWKT(${boundary}));
     `;
   }
   async getAllAreas(cursor?: number, pageSize: number = 10) {
@@ -36,6 +38,6 @@ export class AreaService {
   }
 }
 function isValidWKT(boundary: string): boolean {
-  const regex = /^SRID=\d+;POLYGON\(\([^\)]+\)\)$/i;
+  const regex = /^SRID=4326;POLYGON\(\([^\)]+\)\)$/i;
   return regex.test(boundary);
 }
