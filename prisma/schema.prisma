@@ -19,10 +19,10 @@ model Area {
   id        Int                     @id @default(autoincrement())
   name      String
   createdAt DateTime                @default(now())
-  boundary  Unsupported("geometry")
+  boundary  Unsupported("geometry") // This type is not supported by Prisma Client
   logs      Log[]                   @relation("AreaLogs")
 
-  @@index([boundary], map: "idx_areas_boundary", type: Gist)
+  @@index([boundary], map: "idx_areas_boundary", type: Gist) // GIST is a specialized index type designed for spatial data.
 }
 
 model Log {

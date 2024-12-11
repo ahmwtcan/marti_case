@@ -1,6 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PrismaService } from '../libs/prisma/prisma.service';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AreaService {
@@ -9,7 +8,7 @@ export class AreaService {
     if (!isValidWKT(boundary)) {
       throw new InternalServerErrorException('Invalid boundary format.');
 
-      //SRID=4326;POLYGON((0 0, 0 1, 1 1, 1 0, 0 0)) Şeklinde gönderdiğimiz için EWKT formatında olduğu için bu şekilde kontrol edebiliriz.
+      //SRID=4326;POLYGON((0 0, 0 1, 1 1, 1 0, 0 0)) EWKT format
     }
 
     await this.prisma.$executeRaw`
